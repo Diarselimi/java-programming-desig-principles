@@ -2,8 +2,55 @@ import java.util.*;
 import edu.duke.*;
 
 public class EarthQuakeClient {
+    public static final int START = 1;
+    public static final int END = 2;
+    public static final int ANY = 3;
+    
     public EarthQuakeClient() {
         // TODO Auto-generated constructor stub
+    }
+    
+    public ArrayList<QuakeEntry> filterByPhrase(ArrayList<QuakeEntry> quakeData, int searchIn, String phrase)
+    {
+        ArrayList<QuakeEntry> res = new ArrayList<QuakeEntry>();
+        
+        for ( QuakeEntry qe: quakeData ){ 
+            switch(searchIn){
+                case START:
+                    if(qe.getInfo().substring(0, phrase.length()).equals(phrase)) {
+                        res.add(qe);
+                    }
+                    break;
+                case END:
+                    if(qe.getInfo().substring(qe.getInfo().length() - phrase.length()).equals(phrase)) {
+                        res.add(qe);
+                    }
+                    break;
+                default:
+                    if(qe.getInfo().contains(phrase)) {
+                        res.add(qe);
+                    }
+                    break;
+            }
+        }
+        
+        
+        
+        return res;
+    }
+    
+    public void quakesByPhrase() {
+         EarthQuakeParser parser = new EarthQuakeParser();
+        //String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
+        String source = "data/nov20quakedatasmall.atom";
+        ArrayList<QuakeEntry> list  = parser.read(source);
+        System.out.println("read data for "+list.size()+" quakes");
+        ArrayList<QuakeEntry> quakes = filterByPhrase(list, START, "Explosion");
+        for(QuakeEntry qe: quakes) {
+            System.out.println(qe);
+        }
+        
+        System.out.println("Total found "+quakes.size()+" with the phrase ");
     }
 
     public ArrayList<QuakeEntry> filterByMagnitude(ArrayList<QuakeEntry> quakeData,
@@ -70,7 +117,7 @@ public class EarthQuakeClient {
 
         ArrayList<QuakeEntry> quakes = filterByDistanceFrom(list, 1000*1000, city);
         for(QuakeEntry qe: quakes) {
-			System.out.println(qe.getLocation().distanceTo(city)/1000.0 + " " + qe.getInfo());
+            System.out.println(qe.getLocation().distanceTo(city)/1000.0 + " " + qe.getInfo());
         }
         System.out.println("Found "+quakes.size()+" total");
     }
