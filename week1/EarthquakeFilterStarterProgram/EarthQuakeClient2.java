@@ -40,14 +40,14 @@ public class EarthQuakeClient2 {
     public void testMatchAllFilter(){ 
         EarthQuakeParser parser = new EarthQuakeParser(); 
         
-        String source = "data/nov20quakedata1.atom";
+        String source = "data/nov20quakedata2.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);         
         System.out.println("read data for "+list.size()+" quakes");
         
         MatchAllFilters maf = new MatchAllFilters();
-        maf.addFilter(new MagnitudeFilter(0.0, 2.0));
-        maf.addFilter(new DepthFilter(-100000.0, -10000.0));
-        maf.addFilter(new PhraseFilter(PhraseFilter.ANY, "a"));
+        maf.addFilter(new MagnitudeFilter(1.0, 4.0));
+        maf.addFilter(new DepthFilter(-180000.0, -30000.0 ));
+        maf.addFilter(new PhraseFilter(PhraseFilter.ANY, "o"));
         
         ArrayList<QuakeEntry> m8 = filter(list, maf);
         for (QuakeEntry qe: m8) { 
@@ -61,14 +61,14 @@ public class EarthQuakeClient2 {
     public void testMatchAllFilter2(){ 
         EarthQuakeParser parser = new EarthQuakeParser(); 
         
-        String source = "data/nov20quakedata1.atom";
+        String source = "data/nov20quakedata2.atom";
         ArrayList<QuakeEntry> list  = parser.read(source);         
         System.out.println("read data for "+list.size()+" quakes");
         
         MatchAllFilters maf = new MatchAllFilters();
-        maf.addFilter(new MagnitudeFilter(0.0, 3.0));
-        maf.addFilter(new DistanceFilter(new Location(36.1314, -95.9372), 10000*10000));
-        maf.addFilter(new PhraseFilter(PhraseFilter.ANY, "Ca"));
+        maf.addFilter(new MagnitudeFilter(3.5, 4.5));
+        maf.addFilter(new DistanceFilter(new Location(39.7392, -104.9903), 1000*1000));
+        //maf.addFilter(new PhraseFilter(PhraseFilter.END, "a"));
         ArrayList<QuakeEntry> m8 = filter(list, maf);
         for (QuakeEntry qe: m8) { 
             System.out.println(qe);
