@@ -23,10 +23,19 @@ public class MarkovWord implements IMarkovModel {
         myText = text.split("\\s+");
     }
     
-    public int indexOf(String[] list, WordGram target, int start) {
-        for (int k=start; k<list.length; k++) {
-            if (target.equals(list[k])) {
-                return k;
+    private int indexOf(String[] words, WordGram target, int start) {
+        for (int i = start; i < words.length - target.length(); i++) {
+            if (words[i].equals(target.wordAt(0))) {
+                boolean targetFound = true;
+                for (int j = 1; j < target.length(); j++) {
+                    if (!words[i+j].equals(target.wordAt(j))) {
+                        targetFound = false;
+                        break;
+                    }
+                }
+                if (targetFound) {
+                    return i;
+                }
             }
         }
         return -1;
@@ -34,12 +43,12 @@ public class MarkovWord implements IMarkovModel {
     
     public String getRandomText(int numWords){
         StringBuilder sb = new StringBuilder();
-        int index = myRandom.nextInt(myText.length-1);  // random word to start with
-        String key = myText[index];
-        sb.append(key);
+        int index = myRandom.nextInt(myText.length-myOrder);  // random word to start with
+        WordGram kGram = new WordGram(myText, index, myOrder);
+        sb.append(kGram.toString());
         sb.append(" ");
         for(int k=0; k < numWords-1; k++){
-            ArrayList<String> follows = getFollows(new WordGram(key));
+            ArrayList<String> follows = getFollows(kGram);
             if (follows.size() == 0) {
                 break;
             }
@@ -47,7 +56,7 @@ public class MarkovWord implements IMarkovModel {
             String next = follows.get(index);
             sb.append(next);
             sb.append(" ");
-            key = next;
+            kGram = kGram.shiftAdd(next);
         }
         
         return sb.toString().trim();
@@ -56,18 +65,18 @@ public class MarkovWord implements IMarkovModel {
     private ArrayList<String> getFollows(WordGram kGram) {
         ArrayList<String> follows = new ArrayList<String>();
         int pos = 0;
-        while (pos < myText.length) {
-            pos = indexOf(myText, kGram, pos);
-            if(pos == -1) {
+        while (pos < myText.length - kGram.length()) {
+            int start = indexOf(myText, kGram, pos);
+            if (start == -1) {
                 break;
             }
-            if (pos + 1 >= myText.length) {
+            if (start + kGram.length() >= myText.length) {
                 break;
             }
-            follows.add(myText[pos+1]);
-            pos ++;
+            String next = myText[start+kGram.length()];
+            follows.add(next);
+            pos = start + kGram.length();
         }
-        
         return follows;
     }
    
