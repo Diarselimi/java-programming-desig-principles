@@ -1,18 +1,18 @@
 #BlueJ package file
-dependency1.from=Tester
-dependency1.to=MarkovOne
+dependency1.from=MarkovRunner
+dependency1.to=MarkovZero
 dependency1.type=UsesDependency
 dependency2.from=MarkovRunner
-dependency2.to=MarkovZero
+dependency2.to=MarkovOne
 dependency2.type=UsesDependency
 dependency3.from=MarkovRunner
-dependency3.to=MarkovOne
+dependency3.to=MarkovFour
 dependency3.type=UsesDependency
 dependency4.from=MarkovRunner
-dependency4.to=MarkovFour
+dependency4.to=MarkovModel
 dependency4.type=UsesDependency
-dependency5.from=MarkovRunner
-dependency5.to=MarkovModel
+dependency5.from=Tester
+dependency5.to=MarkovOne
 dependency5.type=UsesDependency
 editor.fx.0.height=722
 editor.fx.0.width=800

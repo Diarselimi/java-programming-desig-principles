@@ -76,11 +76,11 @@ public class EfficientMarkovWord implements IMarkovModel {
         }
         System.out.println("Largest value in map: " + max + "\n");
         System.out.println("Keys with largest value in map:\n");
-        for (WordGram wg : map.keySet()) {
+        /*for (WordGram wg : map.keySet()) {
             if (map.get(wg).size() == max) {
                 System.out.println(wg + "\n");
             }
-        }
+        }*/
     }
     
     private int indexOf(String[] words, WordGram target, int start) {
@@ -102,7 +102,7 @@ public class EfficientMarkovWord implements IMarkovModel {
     }
     
     public String getRandomText(int numWords){
-        map = buildMap();
+        map = buildMap();// call the map builder and build the map.
         printHashMapInfo();
         StringBuilder sb = new StringBuilder();
         int index = myRandom.nextInt(myText.length-myOrder);  // random word to start with

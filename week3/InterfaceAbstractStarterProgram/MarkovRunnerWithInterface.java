@@ -40,9 +40,12 @@ public class MarkovRunnerWithInterface {
     }
     
     public void testHashMap() {
-        EfficientMarkovModel markov = new EfficientMarkovModel(2);
-        String st = "yes-this-is-a-thin-pretty-pink-thistle";
-        runModel(markov, st, 50, 42);
+        FileResource fr = new FileResource();
+        String st = fr.asString();
+        st = st.replace('\n', ' ');
+        int size = 200;
+        EfficientMarkovModel markov = new EfficientMarkovModel(5);
+        runModel(markov, st, size, 531);
     }
 
     private void printOut(String s){

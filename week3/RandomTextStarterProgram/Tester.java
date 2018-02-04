@@ -32,6 +32,6 @@ public class Tester {
 	MarkovOne markov = new MarkovOne();
 	markov.setTraining(st);
 	
-	System.out.println("Characters that follows o "+ markov.getFollows("o").size());
+	System.out.println("Characters that follows he "+ markov.getFollows("he").size());
     }
 }

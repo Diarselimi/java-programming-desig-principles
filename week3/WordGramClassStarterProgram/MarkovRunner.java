@@ -2,8 +2,8 @@
 /**
  * Write a description of class MarkovRunner here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Diar Selimi)
+ * @version (1)
  */
 
 import edu.duke.*;
@@ -55,32 +55,38 @@ public class MarkovRunner {
         FileResource fr = new FileResource(); 
         String st = fr.asString(); 
         st = st.replace('\n', ' '); 
-        MarkovWord markovWord = new MarkovWord(3); 
-        runModel(markovWord, st, 200, 643); 
+        //st = "this is a test yes this is really a test yes a test this is wow";
+        EfficientMarkovWord markovWord = new EfficientMarkovWord(6); 
+        runModel(markovWord, st, 50, 792); 
     } 
     
   
     
     public void compareMethods() {
-	    FileResource fr = new FileResource();
-		String st = fr.asString();
-		st = st.replace('\n', ' ');
-		int size = 100;
-		int seed = 42;
-		
-	    MarkovWord mTwo = new MarkovWord(2);
-	    double begin = System.nanoTime();
+        FileResource fr = new FileResource();
+        String st = fr.asString();
+        st = st.replace('\n', ' ');
+        int size = 100;
+        int seed = 42;
+        
+        MarkovWord mTwo = new MarkovWord(2);
+        double begin = System.nanoTime();
         runModel(mTwo, st, size, seed);
         double end = System.nanoTime();
         double markovModelTime = (end-begin);
         
-	    EfficientMarkovWord mTwoEff = new EfficientMarkovWord(2);
-	    begin = System.nanoTime();
-	    runModel(mTwoEff, st, size, seed);
-	    end = System.nanoTime();
-	    double markovEfficientTime = (end-begin);
-	    System.out.println("Time for MarkovWord: " + markovModelTime + "\n"
-	    + "Time for EfficientMarkovWord: " + markovEfficientTime);
-	}
+        EfficientMarkovWord mTwoEff = new EfficientMarkovWord(2);
+        begin = System.nanoTime();
+        runModel(mTwoEff, st, size, seed);
+        end = System.nanoTime();
+        double markovEfficientTime = (end-begin);
+        System.out.println("Time for MarkovWord: " + markovModelTime + "\n"
+        + "Time for EfficientMarkovWord: " + markovEfficientTime);
+    }
 
+    public void testHashMap() {
+        String st = "this is a test yes this is really a test yes a test this is wow";
+        EfficientMarkovWord efm = new EfficientMarkovWord(2);
+        runModel(efm, st, 50, 42);
+    }
 }
